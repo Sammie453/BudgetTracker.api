@@ -1,40 +1,34 @@
 const express = require('express');
 const cors = require('cors');
-
-const expenseRoutes = require('./routes/expense.routes');
-const incomeRoutes = require('./routes/income.routes');
-const summaryRoutes = require('./routes/summary.routes');
-
-const errorHandler = require('./middleware/error.middleware');
+require('dotenv').config();
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/expenses', expenseRoutes);
-app.use('/api/income', incomeRoutes);
-app.use('/api/summary', summaryRoutes);
-
-app.use(errorHandler);
-
-module.exports = app;
-
+// Routes
 const expenseRoutes = require('./routes/expense.routes');
 const incomeRoutes = require('./routes/income.routes');
 const summaryRoutes = require('./routes/summary.routes');
-app.use((errorHandler));
+const categoryRoutes = require('./routes/categoryRoutes');
+const dashboardRoutes = require('./routes/dashboard.routes');
 
-const express = require('express');
-const app = express();
-
-const categoryRoutes =
-    require('./routes/categoryRoutes');
-
-app.use(express.json());
-
+// Route usage
+app.use('/api/expenses', expenseRoutes);
+app.use('/api/income', incomeRoutes);
+app.use('/api/summary', summaryRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+// Health check
+app.get('/', (req, res) => {
+    res.json({ message: 'Budget Tracker API running' });
 });
+
+// Error handler (must be last)
+const errorHandler = require('./middleware/error.middleware');
+app.use(errorHandler);
+
+module.exports = app;
