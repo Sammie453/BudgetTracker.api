@@ -1,7 +1,7 @@
 // tests/transaction.service.test.js
 
 const transactionService =
-    require('../services/transaction.service');
+    require('./transaction.service');
 
 describe(
     'Transaction Service',
