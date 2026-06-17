@@ -12,4 +12,8 @@ app.use('/api/expenses', require('./routes/expense.routes'));
 const errorHandler = require('./middleware/errorHandler');
 app.use(errorHandler);
 
+const notificationRoutes = require('./routes/notification.routes');
+
+app.use('/api/notifications', notificationRoutes);
+
 module.exports = app;
